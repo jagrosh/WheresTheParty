@@ -6,7 +6,7 @@ So... where's the party? This bot will help you find out! How? By visualizing wh
 
 Take a look at a demo of this bot over at **<https://party.discord.website>**, or feel free to host your own copy (see instructions below)!
 
-![Example Loading...](https://i.imgur.com/gz8bAKP.png)
+![Example Loading...](https://i.imgur.com/DR1fpBS.png)
 
 ### Hosting
 1. Download and build this repository
