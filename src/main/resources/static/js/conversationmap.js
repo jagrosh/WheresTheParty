@@ -9,9 +9,12 @@ function start() {
   };
   socket.onmessage = function(e) {
     json = JSON.parse(e.data);
-    if(json.total) {
-        document.getElementById('total').innerHTML = json.total;
-    } else {
+    if(json.stats) {
+        if(json.stats.sessions)
+            document.getElementById('sessions').innerHTML = json.stats.sessions;
+        if(json.stats.servers)
+            document.getElementById('servers').innerHTML = json.stats.servers;
+    } else if(json.user) {
       if(!nodes.get(json.user.id))
           nodes.add({id:json.user.id, label:json.user.name, image:json.user.avatar, shape:'circularImage'});
       if(!nodes.get(json.channel.id))
@@ -43,6 +46,7 @@ function start() {
         border: '#99AAB5',
         background: '#2C2F33'
       },
+      brokenImage: 'https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png',
       font: { color:'#99AAB5' }
     },
     edges: { color: '#99AAB5' }

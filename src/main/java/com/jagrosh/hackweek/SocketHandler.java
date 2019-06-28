@@ -34,6 +34,9 @@ public class SocketHandler
     private static final Queue<Session> SESSIONS = new ConcurrentLinkedQueue<>();
     private static final Logger LOG = LoggerFactory.getLogger("Sockets");
     
+    // I'm not a huge fan of using statics like this, but Spark is static which means the path of least resistance
+    // is to make other things conform in a simple way. Using statics for this is not ideal, but should be fine since
+    // it's unlikely that someone would be trying to run two of this website in a single JVM somehow
     public static void sendToAllSessions(String message)
     {
         SESSIONS.forEach(s ->
@@ -53,14 +56,14 @@ public class SocketHandler
     public void connected(Session session) 
     {
         SESSIONS.add(session);
-        sendToAllSessions(new JSONObject().put("total",SESSIONS.size()).toString());
+        sendToAllSessions(new JSONObject().put("stats", new JSONObject().put("sessions", SESSIONS.size()).put("servers", DiscordHandler.getLastKnownGuildCount())).toString());
     }
 
     @OnWebSocketClose
     public void closed(Session session, int statusCode, String reason) 
     {
         SESSIONS.remove(session);
-        sendToAllSessions(new JSONObject().put("total",SESSIONS.size()).toString());
+        sendToAllSessions(new JSONObject().put("stats", new JSONObject().put("sessions", SESSIONS.size()).put("servers", DiscordHandler.getLastKnownGuildCount())).toString());
     }
 
     @OnWebSocketMessage

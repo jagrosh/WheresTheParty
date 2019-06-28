@@ -16,6 +16,9 @@
 package com.jagrosh.hackweek;
 
 import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.ReadyEvent;
+import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 import org.json.JSONObject;
@@ -26,11 +29,15 @@ import org.json.JSONObject;
  */
 public class DiscordHandler implements EventListener
 {
+    private static int servercount = 0;
+    
     @Override
     public void onEvent(Event event)
     {
         if(event instanceof GuildMessageReceivedEvent)
             onGuildMessageReceived((GuildMessageReceivedEvent) event);
+        if(event instanceof GuildJoinEvent || event instanceof GuildLeaveEvent || event instanceof ReadyEvent)
+            onGuildTotalChange(event);
     }
     
     private void onGuildMessageReceived(GuildMessageReceivedEvent event)
@@ -50,5 +57,16 @@ public class DiscordHandler implements EventListener
                         .put("name", event.getGuild().getName())
                         .put("icon", event.getGuild().getIconUrl()))
                 .toString());
+    }
+    
+    private void onGuildTotalChange(Event event)
+    {
+        servercount = (int) event.getJDA().asBot().getShardManager().getShardCache().size();
+        SocketHandler.sendToAllSessions(new JSONObject().put("stats", new JSONObject().put("servers", servercount)).toString());
+    }
+    
+    public static int getLastKnownGuildCount()
+    {
+        return servercount;
     }
 }
