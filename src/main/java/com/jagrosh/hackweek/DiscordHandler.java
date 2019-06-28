@@ -61,7 +61,7 @@ public class DiscordHandler implements EventListener
     
     private void onGuildTotalChange(Event event)
     {
-        servercount = (int) event.getJDA().asBot().getShardManager().getShardCache().size();
+        servercount = (int) event.getJDA().asBot().getShardManager().getGuildCache().size();
         SocketHandler.sendToAllSessions(new JSONObject().put("stats", new JSONObject().put("servers", servercount)).toString());
     }
     
