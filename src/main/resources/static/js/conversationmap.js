@@ -1,6 +1,7 @@
 function start() {
   var nodes = new vis.DataSet([]);
   var edges = new vis.DataSet([]);
+  var brokenImage = 'https://discordapp.com/assets/6debd47ed13483642cf09e832ed0bc1b.png';
   
   // Connect to the websocket
   var socket = new WebSocket(window.location.protocol.replace('http','ws') + '//' + window.location.hostname + '/ws');
@@ -20,7 +21,7 @@ function start() {
       if(!nodes.get(json.channel.id))
           nodes.add({id:json.channel.id, label:'#'+json.channel.name, group:json.guild.id, shape:'box', font: { color:'#2C2F33' }});
       if(!nodes.get(json.guild.id))
-          nodes.add({id:json.guild.id, label:json.guild.name, group:json.guild.id, image:(json.guild.icon ? json.guild.icon : "brokenImage"), shape:'image'});
+          nodes.add({id:json.guild.id, label:json.guild.name, group:json.guild.id, image:(json.guild.icon ? json.guild.icon : brokenImage), shape:'image'});
       if(!edges.get(json.user.id+"-"+json.channel.id))
           edges.add({id:json.user.id+"-"+json.channel.id, from:json.user.id, to:json.channel.id});
       if(!edges.get(json.channel.id+"-"+json.guild.id))
@@ -46,7 +47,6 @@ function start() {
         border: '#99AAB5',
         background: '#2C2F33'
       },
-      brokenImage: 'https://discordapp.com/assets/6debd47ed13483642cf09e832ed0bc1b.png',
       font: { color:'#99AAB5' }
     },
     edges: { color: '#99AAB5' }
