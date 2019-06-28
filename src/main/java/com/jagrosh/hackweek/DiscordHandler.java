@@ -15,10 +15,12 @@
  */
 package com.jagrosh.hackweek;
 
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.Event;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.EventListener;
 import org.json.JSONObject;
@@ -31,13 +33,22 @@ public class DiscordHandler implements EventListener
 {
     private static int servercount = 0;
     
+    private final String website;
+    
+    public DiscordHandler(String website)
+    {
+        this.website = website;
+    }
+    
     @Override
     public void onEvent(Event event)
     {
         if(event instanceof GuildMessageReceivedEvent)
             onGuildMessageReceived((GuildMessageReceivedEvent) event);
-        if(event instanceof GuildJoinEvent || event instanceof GuildLeaveEvent || event instanceof ReadyEvent)
+        else if(event instanceof GuildJoinEvent || event instanceof GuildLeaveEvent || event instanceof ReadyEvent)
             onGuildTotalChange(event);
+        else if(event instanceof MessageReceivedEvent)
+            onMessageReceived((MessageReceivedEvent) event);
     }
     
     private void onGuildMessageReceived(GuildMessageReceivedEvent event)
@@ -57,6 +68,18 @@ public class DiscordHandler implements EventListener
                         .put("name", event.getGuild().getName())
                         .put("icon", event.getGuild().getIconUrl()))
                 .toString());
+    }
+    
+    private void onMessageReceived(MessageReceivedEvent event)
+    {
+        if(event.getAuthor().isBot())
+            return;
+        if(event.getGuild() == null || 
+                (event.getMessage().getMentionedUsers().contains(event.getJDA().getSelfUser()) 
+                && event.getGuild().getSelfMember().hasPermission(event.getTextChannel(), Permission.MESSAGE_WRITE)))
+        {
+            event.getChannel().sendMessage("\uD83C\uDF8A Hey there! You can find out where the party is on "+website).queue(); // 🎊
+        }
     }
     
     private void onGuildTotalChange(Event event)

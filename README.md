@@ -9,7 +9,7 @@ Take a look at a demo of this bot over at **<https://party.discord.website>**, o
 ![Example Loading...](https://i.imgur.com/gz8bAKP.png)
 
 ### Hosting
-1. Download and build this repository
+1. Download this repository
 2. Install Java and Maven (if you don't have them installed)
 3. Build by running `mvn clean install`
 4. Create an `application.conf` file, filling in the blanks below:

@@ -53,3 +53,15 @@ function start() {
   };
   var network = new vis.Network(container, data, options);
 }
+
+function toggleInfobox() {
+  var im = document.getElementById("infobox-main");
+  var sb = document.getElementById("small-button");
+  if (im.style.display === "none") {
+    im.style.display = "block";
+    sb.style.display = "none";
+  } else {
+    im.style.display = "none";
+    sb.style.display = "block";
+  }
+} 

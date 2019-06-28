@@ -39,7 +39,7 @@ public class Main
         Config config = ConfigFactory.load();
         new DefaultShardManagerBuilder(config.getString("bot.token"))
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.GAME))
-                .addEventListeners(new DiscordHandler())
+                .addEventListeners(new DiscordHandler(config.getString("website")))
                 .setGame(Game.playing(config.getString("bot.game")))
                 .build();
         Spark.staticFiles.externalLocation(config.getString("web.static"));

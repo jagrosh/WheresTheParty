@@ -29,8 +29,9 @@
 </head>
 <body onload="start()">
     <div class="infobox">
-        <center>
-            <h2>🎊 Where's the Party?</h2>
+        <button onclick="toggleInfobox()" style="display: none;" id="small-button">🎊</button>
+        <center id="infobox-main">
+            <h2><button onclick="toggleInfobox()">🎊</button> Where's the Party?</h2>
             <h4>Real-time graph of Discord conversations</h4>
             <p>Connected to <b id="servers">several</b> servers</p>
             <p><b id="sessions">1</b> people viewing right now!</p>
@@ -40,7 +41,6 @@
             <br>
             <p>Discord Hack Week 2019</p>
             <p>&copy; 2019 jagrosh#4824</p>
-            
         </center>
     </div>
     <div id="network" style="width: 100%; height: 100%;"></div>
