@@ -1,0 +1,35 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  font: 10pt arial;
+  margin: 0;
+  background-color: #2C2F33;
+}
+
+.infobox {
+  border-width: 3px;
+  border-color: #FFFFFF;
+  float: left; 
+  position: fixed;
+  color: #FFFFFF;
+  margin: 10px;
+  z-index: 999;
+}
+.infobox p {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.infobox a {
+  padding: 4px 6px;
+  margin: 3px;
+  border: 2px solid #FFFFFF;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.infobox a:link, a:visited {
+  color: #FFFFFF;
+}
+.infobox a:hover {
+  color: #99AAB5;
+  border-color: #99AAB5;
+        }
