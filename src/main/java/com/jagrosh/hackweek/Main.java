@@ -40,7 +40,7 @@ public class Main
         new DefaultShardManagerBuilder(config.getString("bot.token"))
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.GAME))
                 .addEventListeners(new DiscordHandler())
-                .setGame(Game.playing("Hackweek!?"))
+                .setGame(Game.playing(config.getString("bot.game")))
                 .build();
         Spark.staticFiles.externalLocation(config.getString("web.static"));
         Spark.port(config.getInt("web.port"));
