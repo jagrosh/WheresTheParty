@@ -20,32 +20,67 @@ function start() {
         let data;
         let now = new Date();
 
-        data = {id:json.user.id, label:json.user.name, image:json.user.avatar, shape:'circularImage', date:now};
-        if(!nodes.get(json.user.id))
+        data = {
+          id: json.user.id,
+          label: json.user.name,
+          image: json.user.avatar,
+          shape: 'circularImage',
+          date: now,
+        };
+
+        if(!nodes.get(data.id))
           nodes.add(data);
         else
           nodes.update(data);
 
-        data = {id:json.channel.id, label:'#'+json.channel.name, group:json.guild.id, shape:'box', font: { color:'#2C2F33' }, date:now};
-        if(!nodes.get(json.channel.id))
+        data = {
+          id: json.channel.id,
+          label: '#' + json.channel.name,
+          group: json.guild.id,
+          shape: 'box',
+          font: { color:'#2C2F33' },
+          date: now,
+        };
+
+        if(!nodes.get(data.id))
           nodes.add(data);
         else
           nodes.update(data);
 
-        data = {id:json.guild.id, label:json.guild.name, group:json.guild.id, image:(json.guild.icon ? json.guild.icon : brokenImage), shape:'image', date:now};
+        data = {
+          id: json.guild.id,
+          label: json.guild.name,
+          group: json.guild.id,
+          image: (json.guild.icon ? json.guild.icon : brokenImage),
+          shape: 'image',
+          date: now,
+        };
+
         if(!nodes.get(json.guild.id))
           nodes.add(data);
         else
           nodes.update(data);
 
-        data = {id:json.user.id+"-"+json.channel.id, from:json.user.id, to:json.channel.id, date:now};
-        if(!edges.get(json.user.id+"-"+json.channel.id))
+        data = {
+          id: json.user.id+"-"+json.channel.id,
+          from: json.user.id,
+          to: json.channel.id,
+          date: now,
+        };
+
+        if(!edges.get(data.id))
           edges.add(data);
         else
           edges.update(data);
 
-        data = {id:json.channel.id+"-"+json.guild.id, from:json.channel.id, to:json.guild.id, date:now};
-        if(!edges.get(json.channel.id+"-"+json.guild.id))
+        data = {
+          id: json.channel.id+"-"+json.guild.id,
+          from: json.channel.id,
+          to: json.guild.id,
+          date: now,
+        };
+
+        if(!edges.get(data.id))
           edges.add(data);
         else
           edges.update(data);
