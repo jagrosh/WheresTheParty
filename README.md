@@ -28,5 +28,6 @@ web {
 5. Run with `java -Dconfig.file=application.conf -jar Hackweek-0.1-All.jar`
 6. Visit `localhost:8080` in your web browser!
 
-
-This project was created for [Discord Hack Week 2019](https://blog.discordapp.com/discord-community-hack-week-build-and-create-alongside-us-6b2a7b7bba33).
+### Notes
+* This project was created for [Discord Hack Week 2019](https://blog.discordapp.com/discord-community-hack-week-build-and-create-alongside-us-6b2a7b7bba33).
+* This project can show you where the party is, but it doesn't actually help you _join_ the party.

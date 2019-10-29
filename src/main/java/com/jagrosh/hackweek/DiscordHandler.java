@@ -15,14 +15,15 @@
  */
 package com.jagrosh.hackweek;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.events.Event;
-import net.dv8tion.jda.core.events.ReadyEvent;
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.EventListener;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.sharding.ShardManager;
 import org.json.JSONObject;
 
 /**
@@ -41,7 +42,7 @@ public class DiscordHandler implements EventListener
     }
     
     @Override
-    public void onEvent(Event event)
+    public void onEvent(GenericEvent event)
     {
         if(event instanceof GuildMessageReceivedEvent)
             onGuildMessageReceived((GuildMessageReceivedEvent) event);
@@ -53,7 +54,7 @@ public class DiscordHandler implements EventListener
     
     private void onGuildMessageReceived(GuildMessageReceivedEvent event)
     {
-        if(event.getAuthor() == null || event.getAuthor().getDiscriminator().equals("0000"))
+        if(event.isWebhookMessage())
             return; // ignore unknown users and webhooks
         SocketHandler.sendToAllSessions(new JSONObject()
                 .put("user", new JSONObject()
@@ -74,7 +75,7 @@ public class DiscordHandler implements EventListener
     {
         if(event.getAuthor().isBot())
             return;
-        if(event.getGuild() == null || 
+        if(!event.isFromGuild() || 
                 (event.getMessage().getMentionedUsers().contains(event.getJDA().getSelfUser()) 
                 && event.getGuild().getSelfMember().hasPermission(event.getTextChannel(), Permission.MESSAGE_WRITE)))
         {
@@ -82,9 +83,10 @@ public class DiscordHandler implements EventListener
         }
     }
     
-    private void onGuildTotalChange(Event event)
+    private void onGuildTotalChange(GenericEvent event)
     {
-        servercount = (int) event.getJDA().asBot().getShardManager().getGuildCache().size();
+        ShardManager sm = event.getJDA().getShardManager();
+        servercount = sm == null ? 0 : (int) sm.getGuildCache().size();
         SocketHandler.sendToAllSessions(new JSONObject().put("stats", new JSONObject().put("servers", servercount)).toString());
     }
     
