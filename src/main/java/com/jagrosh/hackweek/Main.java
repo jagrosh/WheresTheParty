@@ -18,9 +18,9 @@ package com.jagrosh.hackweek;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import java.util.EnumSet;
-import net.dv8tion.jda.bot.sharding.DefaultShardManagerBuilder;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.utils.cache.CacheFlag;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import spark.Spark;
 
 /**
@@ -38,9 +38,10 @@ public class Main
     {
         Config config = ConfigFactory.load();
         new DefaultShardManagerBuilder(config.getString("bot.token"))
-                .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.GAME))
+                .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE))
                 .addEventListeners(new DiscordHandler(config.getString("website")))
-                .setGame(Game.playing(config.getString("bot.game")))
+                .setActivity(Activity.playing(config.getString("bot.game")))
+                .setGuildSubscriptionsEnabled(false)
                 .build();
         Spark.staticFiles.externalLocation(config.getString("web.static"));
         Spark.port(config.getInt("web.port"));
