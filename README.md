@@ -4,7 +4,7 @@
 
 So... where's the party? This bot will help you find out! How? By visualizing where people are posting messages _right now!_ The graph is shown and updated in real-time, so when a user pops up linked to a channel, it means they just sent a message there!
 
-Take a look at a demo of this bot over at **<https://party.discord.website>**, or feel free to host your own copy (see instructions below)!
+Take a look at a demo of this bot over at **<https://discordparty.herokuapp.com>**, or feel free to host your own copy (see instructions below)!
 
 ![Example Loading...](https://i.imgur.com/DR1fpBS.png)
 
@@ -25,7 +25,7 @@ web {
     port = 8080
 }
 ```
-5. Run with `java -Dconfig.file=application.conf -jar Hackweek-0.1-All.jar`
+5. Run with `java -Dconfig.file=application.conf -jar Hackweek-0.2-All.jar`
 6. Visit `localhost:8080` in your web browser!
 
 ### Notes

@@ -41,6 +41,7 @@ public class Main
                 .setDisabledCacheFlags(EnumSet.of(CacheFlag.EMOTE, CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE))
                 .addEventListeners(new DiscordHandler(config.getString("website")))
                 .setActivity(Activity.playing(config.getString("bot.game")))
+                .setGuildSubscriptionsEnabled(false)
                 .build();
         Spark.staticFiles.externalLocation(config.getString("web.static"));
         Spark.port(config.getInt("web.port"));

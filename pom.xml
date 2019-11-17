@@ -12,14 +12,23 @@
             <name>bintray</name>
             <url>http://jcenter.bintray.com</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
     
     <dependencies>
-        <dependency>
+        <!--dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>4.0.0_54</version>
-        </dependency>
+        </dependency-->
+	<dependency>
+	    <groupId>com.github.DV8FromTheWorld</groupId>
+	    <artifactId>JDA</artifactId>
+	    <version>experimental~lazy-loading-SNAPSHOT</version>
+	</dependency>
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
@@ -61,6 +70,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.2</version>
                 <configuration>
                     <archive>
                         <manifest>
